@@ -47,12 +47,12 @@ serverchan_notify_4=`nvram get serverchan_notify_4`
 //add line by CaoJie in 2019.8.14
 cat /proc/1/net/arp | tail -n +2 | grep -v "^$" | awk -F " " '{ if ($3!=0x0) print ""$4""}' | tr [a-z] [A-Z] > /tmp/online_device
 
-dmesg -c|iwpriv ra0 show stainfo
+dmesg -c && iwpriv ra0 show stainfo
 dmesg | tail -n +7 | awk -F " " '{if($1!="")print ""$1""}' >> /tmp/online_device
 
 sleep 1
 
-dmesg -c|iwpriv rai0 show stainfo
+dmesg -c && iwpriv rai0 show stainfo
 dmesg | tail -n +7 | awk -F " " '{if($1!="")print ""$1""}' >> /tmp/online_device
 
 awk -F ","  'NR==FNR{a[$1]=1}NR>FNR{if($2 in a){print""$1","$2","$3","$4","$5",0"}else{print""$1","$2","$3","$4","$5",1"}}' /tmp/online_device /tmp/static_ip.inf > /tmp/static_ip_new.inf
