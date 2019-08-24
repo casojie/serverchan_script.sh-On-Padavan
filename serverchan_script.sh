@@ -124,7 +124,7 @@ if [ "$serverchan_notify_2" = "1" ] ; then
 
     if [ -s "/tmp/var/newhostname不重复.txt" ] ; then
         content=`awk -F " " '{print "IP"$1", MAC: "$2"\n\nName: "$3"\n\n\n"}' /tmp/var/newhostname不重复.txt`
-        curl -s "http://sc.ftqq.com/SCU34310T59d5701493a443f694e73757af5989f25bc72eff8281e.send?text="`nvram get computer_name`"_New_drivec_online" -d "&desp=${content}" &
+        curl -s "http://sc.ftqq.com/$serverchan_sckey.send?text="`nvram get computer_name`"_New_drivec_online" -d "&desp=${content}" &
         logger -t "ServerChan.sh" "New_drivec_online:${content}"
         cat /tmp/var/newhostname不重复.txt >> /etc/storage/hostname.txt
     fi
